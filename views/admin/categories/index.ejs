@@ -16,6 +16,7 @@
                 <th>Ações</th>
             </tr>
         </thead>
+
         <tbody>
             
             <% categories.forEach(category => { %>
@@ -25,26 +26,35 @@
                     <th> <%=category.title %>  </th>
                     <th> <%=category.slug   %> </th>
                     <th>
-                    <button class='btn btn-warning'> Editar </button>
-                    <form method='POST' action="/categories/delete" style="display: inline;">
+                        <a href='/admin/categories/edit/<%=category.id%> ' class='btn btn-warning'> Editar </a>
+
+                    <form  method='POST' action="/categories/delete" style="display: inline;" onsubmit=confirmarDelecao(event,this)>
                         <input type="hidden" name ='id' value = "<%=category.id %>">
                         <button class='btn btn-danger'> Deletar </button>
                     </form>
-                </th>
+
+                    </th>
                 </tr>
-                
-                
-
-
             <% }) %>
-         
-            
-            
+
 
         </tbody>
     </table>
-
 </div>
-
 <%- include('../../partials/footer')  %> 
  
+<script>
+    function confirmarDelecao(event, formulario){
+        event.preventDefault() //impede que o formulário seja submetido/* Cancela o evento se for cancelável, sem parar a propagação do mesmo.
+        console.log('O formulário não foi enviado')
+        const decision = confirm("Você quer deletar esta categoria?") //retorna true or false
+        if (decision){
+            formulario.submit()
+
+        } else{
+            console.log('Eu não escolhi deletar, foi um acidente')
+
+        }
+
+    }
+</script>

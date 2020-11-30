@@ -54,4 +54,36 @@ Router.post('/categories/delete',(req,res)=>{
     }
 
 })
+
+Router.get('/admin/categories/edit/:id',(req,res)=>{
+    const { id } = req.params
+    Category.findByPk(id).then((category)=>{
+
+        if(isNaN(id)){
+            res.redirect('/admin/categories')
+        }
+
+        if (category != undefined){
+            res.render('admin/categories/edit',{category:category})
+        }else{
+            res.redirect("/admin/categories")  
+        }
+    }).catch(erro=>{
+        res.redirect("/admin/categories")
+    })
+})
+
+Router.post('/categories/update',(req,res)=>{
+    const { id, title } = req.body
+    Category.update({title:title, slug: slugify(title)},{
+        where:{id:id}
+    }).then(()=>{
+        res.redirect('/admin/categories')
+    })
+
+})
+
+
+
+
 module.exports = Router

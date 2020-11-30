@@ -36,5 +36,5 @@ app.get('/',(req,res)=>{
 })
 
 app.listen(8080, ()=>{
-    console.log('servidor rodando')
+    console.log('servidor rodando na porta 8080')
 })
