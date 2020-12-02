@@ -1,0 +1,20 @@
+<%- include('partials/header')  %> 
+<%- include('partials/homenavbar')  %>
+
+<body>
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <h1><%=article.title  %></h1> 
+                </div>
+                <div class="card-body">
+                    
+                    <%-article.body  %>  <!--  Exiba essa variável formatando-a para HTML, usando o "-" -->
+                    
+                </div>
+            </div>
+
+        </div>
+
+</body>
+<%- include('partials/footer')  %> 

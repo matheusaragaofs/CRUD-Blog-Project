@@ -1,0 +1,62 @@
+<%- include('../../partials/header')  %> 
+
+<%- include('../../partials/navbar')  %> 
+
+<div class="container">
+    <hr>
+    <h2>Artigos</h2>
+    <a href='/admin/articles/new' class='btn btn-success'> Criar novo artigo</a>
+    <hr>
+    <table class='table table-bordered'>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Slug</th>
+                <th>Categoria</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% article.forEach(article => { %>
+                <tr>
+                <td><%=article.id%></td>
+                <td><%=article.title%></td>  
+                <td><%=article.slug%></td>
+                <td><%=article.category.title%></td>
+                <td>
+                    
+                    <form  method='POST' action="/articles/delete" style="display: inline;" onsubmit=confirmarDelecao(event,this)>
+                        <input type="hidden" name ='id' value = "<%=article.id %>">
+                        <button class='btn btn-danger'> Deletar </button>
+                    </form>
+                
+                </td>
+
+                </tr>
+                    
+            <% }) %>
+
+         
+
+               
+        </tbody>
+    </table>
+</div>
+<%- include('../../partials/footer')  %> 
+ 
+<script>
+    function confirmarDelecao(event, formulario){
+        event.preventDefault() //impede que o formulário seja submetido/* Cancela o evento se for cancelável, sem parar a propagação do mesmo.
+        console.log('O formulário não foi enviado')
+        const decision = confirm("Você quer deletar este artigo?") //retorna true or false
+        if (decision){
+            formulario.submit()
+
+        } else{
+            console.log('Eu não escolhi deletar, foi um acidente')
+
+        }
+
+    }
+</script>

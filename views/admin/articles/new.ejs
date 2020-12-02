@@ -14,25 +14,21 @@
         <div class="card-body">
             <form action="/articles/save" method="POST">
 
-                <input type="text" class='form-control' placeholder= 'Defina o título do artigo', name = 'title' value=''> <br>
+                <input type="text" class='form-control' placeholder= 'Defina o título do artigo', name = 'title'> <br>
                 <textarea id='article' name="body" placeholder="Escreva seu artigo aqui" class='form-control' ></textarea> <br>
 
                 <label  >Categorias</label>
                 <select name='category' class='form-control' >
                     <% categories.forEach(category => { %>
-                        <option value = <%=category.id  %> > <%= category.title %></option>
+                        <option value = <%=category.id%>> <%= category.title %></option>
                     <% }) %>
                 </select> <br>
 
                 <button class='btn btn-success'>Cadastrar</button>
             </form>
         </div>
-      
 </div>
 </div>
-
-
-
 
 <%- include('../../partials/footer')  %>
 <!-- Carregar esse script para utilizar o tinymce, serve para manipulação de texto da textarea -->

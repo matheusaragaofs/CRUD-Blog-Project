@@ -5,7 +5,14 @@ const Article =  require('./Article')
 const slugify = require('slugify')
 
 Router.get("/admin/articles",(req,res)=>{
-    res.send('Rota de artigos')
+    Article.findAll({
+        include: [{model: Category}] //Vai puxar os dados da tabela categoria graças ao relacionamento
+    }).then(article=>{
+            res.render('admin/articles/index',{
+            article:article
+        })
+        
+    })
 
 })
 
@@ -28,6 +35,27 @@ Router.post('/articles/save',(req,res)=>{
     }).then(()=>{
         res.redirect('/admin/articles')
     })
+
+})
+
+Router.post('/articles/delete',(req,res)=>{
+    const { id } = req.body
+    if (id != undefined){
+        if (!isNaN(id)){
+            Article.destroy({
+                where:{
+                    id:id
+                }
+            }).then(()=>{
+                res.redirect('/admin/articles')
+            })
+        }else{ //não for um número
+            res.redirect('/admin/articles')
+        }
+    }else{ //NULL
+        res.redirect('/admin/articles')
+
+    }
 
 })
 
