@@ -59,4 +59,42 @@ Router.post('/articles/delete',(req,res)=>{
 
 })
 
+
+Router.get('/admin/article/edit/:id',(req,res)=>{
+    const { id } = req.params
+    
+    Article.findByPk(id,
+        {
+    }).then(article=>{
+        if (isNaN(id)){ 
+            res.redirect('/admin/articles')
+        }  
+        if (article != undefined){ 
+            Category.findAll().then(category=>{
+
+                res.render('admin/articles/edit',{article:article, category:category})
+            })
+        }else{
+            res.redirect('/admin/articles')
+        }
+    }).catch(err=>{
+        res.redirect('/admin/articles')
+    })
+
+})
+
+
+Router.post('/admin/article/update',(req,res)=>{
+    const { id, title , body, category} = req.body
+    Article.update(
+        {title:title,
+         body:body, 
+         slug: slugify(title)},
+         {where:{
+             id:id
+         }}).then(()=>{
+             res.redirect('/admin/articles')
+         })
+})
+
 module.exports = Router

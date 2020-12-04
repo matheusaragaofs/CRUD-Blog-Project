@@ -1,0 +1,43 @@
+<%- include('../../partials/header')  %> 
+
+<%- include('../../partials/navbar')  %> 
+
+
+<br>
+<div class="container">
+
+    <form action="/admin/article/update" method="POST">
+        <!-- Pegar o id, pra usar no where -->
+        <input type="hidden" value='<%=article.id%>' name='id'>  
+         <label for="title"><h1 >Título</h1></label>
+         <input id='title' class='form-control' type="text" placeholder="Escreva aqui o título de seu artigo" name="title"> <br>
+         <label for="article"><h1 >Corpo</h1></label>
+        <textarea id='articSle' class='form-control'  name="body" placeholder="Escreva aqui o seu artigo"></textarea>
+      
+        <select name="category" >
+            <% category.forEach(category => { %>
+                <option value="<%=category.id %> ">  <%=category.title  %>   </option>
+            <% }) %>
+        </select>
+    </form>
+
+
+
+     
+
+
+
+
+<%- include('../../partials/footer')  %> 
+ 
+
+<!-- Carregar esse script para utilizar o tinymce, serve para manipulação de texto da textarea -->
+<script src='/tinymce/tinymce.min.js'></script>
+
+<script>
+    tinymce.init({
+        selector: "#article",
+        plugins: ["advlist autolink link image lists print preview hr searchreplace wordcount fullscreen insertdatetime  media save table paste emoticons"],
+        language:'pt_BR'
+    })
+</script>
