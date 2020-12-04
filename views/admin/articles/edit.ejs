@@ -5,21 +5,34 @@
 
 <br>
 <div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h1>Edição de Artigo</h1>
+        </div>
 
-    <form action="/admin/article/update" method="POST">
-        <!-- Pegar o id, pra usar no where -->
-        <input type="hidden" value='<%=article.id%>' name='id'>  
-         <label for="title"><h1 >Título</h1></label>
-         <input id='title' class='form-control' type="text" placeholder="Escreva aqui o título de seu artigo" name="title"> <br>
-         <label for="article"><h1 >Corpo</h1></label>
-        <textarea id='articSle' class='form-control'  name="body" placeholder="Escreva aqui o seu artigo"></textarea>
-      
-        <select name="category" >
-            <% category.forEach(category => { %>
-                <option value="<%=category.id %> ">  <%=category.title  %>   </option>
-            <% }) %>
-        </select>
-    </form>
+            <div class="card-body">
+                <form action="/admin/article/update" method="POST">
+                    <!-- Pegar o id, pra usar no where -->
+                    <input type="hidden" value='<%=article.id%>' name='id'>  
+                     <label for="title"><h1 >Título</h1></label>
+                     <input id='title' value = "<%=article.title %> " class='form-control' type="text" placeholder="Escreva aqui o título de seu artigo" name="title"> <br>
+
+                     <label for="article"><h1 >Corpo</h1></label>
+                    <textarea id='article' class='form-control'  name="body" placeholder="Escreva aqui o seu artigo"></textarea>
+
+                    <label for="category"><h1>Categorias</h1></label>
+                    <select id='category' class='form-control' name="category" >
+                        <% category.forEach(category => { %>
+                            <option value="<%=category.id %> ">  <%=category.title  %>   </option>
+                        <% }) %>
+                    </select>
+                    <br>
+                    <button type="submit" class="btn btn-primary">Editar o artigo</button> 
+                    
+                </form>
+            </div>
+
+    </div>
 
 
 

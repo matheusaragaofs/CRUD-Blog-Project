@@ -89,7 +89,8 @@ Router.post('/admin/article/update',(req,res)=>{
     Article.update(
         {title:title,
          body:body, 
-         slug: slugify(title)},
+         slug: slugify(title),
+         categoryId:category},
          {where:{
              id:id
          }}).then(()=>{
