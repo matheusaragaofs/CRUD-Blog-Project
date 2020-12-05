@@ -98,4 +98,46 @@ Router.post('/admin/article/update',(req,res)=>{
          })
 })
 
+
+Router.get('/articles/page/:num',(req,res)=>{
+
+    const { num } = req.params
+    var offset = 0
+    if (num == 1 || num==0 || isNaN(num)) {
+        offset = 0
+    }else{
+        offset = parseInt(num-1)*4
+    }
+
+   
+    Article.findAndCountAll({
+        limit:4,
+        offset: offset,
+        order:[['id','DESC']]
+
+    }).then(articles=>{
+        var next
+        if ((offset+4) >= articles.count){
+            next = false
+        }else{
+            next = true
+        }
+        
+        const result = {
+            page :parseInt(num),
+            next:next, 
+            articles:articles,
+        }
+
+
+        Category.findAll().then(categories=>{
+
+            res.render('admin/articles/page',{categories:categories, result:result})
+
+
+        })
+        // res.json(result)
+    })
+})
+
 module.exports = Router
