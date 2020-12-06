@@ -6,7 +6,10 @@ const User = require('./User')
 const bcrypt = require('bcryptjs')
 
 
+
+
 Router.get('/admin/users',(req,res)=>{
+ 
     User.findAll().then(users=>{
         res.render('admin/users/users',{users:users})
 
@@ -58,22 +61,26 @@ Router.post('/authenticate',(req,res)=>{
         if (user != undefined){
             var correct = bcrypt.compareSync(password,user.password)
             if (correct){
-                req.session.usuarios= {
-                    user: user.email,
+                req.session.user= {
                     id: user.id,
-                    senha: user.password
+                    user: user.email,
                 }
         
-                res.json(req.session.usuarios)
+                res.redirect('/admin/articles')
             }else{
-                res.send('Nao ta certo')
+                res.redirect('/login')
             }            
         }else{
-            res.send('Nao ta certo')
+            res.send('/login')
         }
         
     })
 })
 
+
+Router.get("/logout",(req,res)=>{
+    req.session.user = undefined
+    res.redirect('/')
+})
     
 module.exports = Router
